@@ -10,25 +10,35 @@ class Game:
         self.player2IsAI = True
         self.player1Iterations = 100
         self.player2Iterations = 100
+        self.gameTurn = 0
+        self.gameResult = 0
         self.sleepAfterAITurn = 0.5
 
-    def startGame(self):
+    def startGame(self, verbose = True):
         board = Board()
-        board.printBoard()
+        if verbose: board.printBoard()
         while board.wonBy == 0:
             def makePlayerMove():
-                nextMove = input().strip().split(" ")
-                print(str(board.getMoves()) + " -> " + str(nextMove))
-                board.makeMove(int(nextMove[0]), int(nextMove[1]))
-                board.printBoard()
-                print(str(board.getMoves()))
+                nextMove = True
+                while nextMove:
+                    try:
+                        nextMove = input().strip().split(" ")
+                        if verbose: print(str(board.getMoves()) + " -> " + str(nextMove))
+                        board.makeMove(int(nextMove[0]), int(nextMove[1]))
+                        if verbose: board.printBoard()
+                        if verbose: print(str(board.getMoves()))
+                        break
+                    except:
+                        pass
             def makeAIMove():
-                nextMove = MonteCarloGetMove(board, self.player1Iterations if board.getCurrentPlayer() == 1 else self.player2Iterations)
-                print(str(board.getMoves()) + " -> " + str(nextMove))
+                nextMove = MonteCarloGetMove(board, self.player1Iterations if board.getCurrentPlayer() == 1 else self.player2Iterations, verbose)
+                if verbose: print(str(board.getMoves()) + " -> " + str(nextMove))
                 board.makeMove(int(nextMove[0]), int(nextMove[1]))
-                board.printBoard()
-                print(str(board.getMoves()))
+                if verbose: board.printBoard()
+                if verbose: print(str(board.getMoves()))
                 sleep(self.sleepAfterAITurn)
+
+            self.gameTurn += 1
             if board.getCurrentPlayer() == 1:
                 if self.player1IsAI:
                     makeAIMove()
@@ -39,4 +49,9 @@ class Game:
                     makeAIMove()
                 else:
                     makePlayerMove()
-        print("Game was won by player " + str(board.wonBy))
+        if verbose: print("Game was won by player " + str(board.wonBy))
+        self.gameResult = board.wonBy
+
+    def resetValues(self):
+        self.gameResult = 0
+        self.gameTurn = 0

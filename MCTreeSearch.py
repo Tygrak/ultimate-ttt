@@ -38,7 +38,7 @@ class Node:
         self.wins += result
 
 #Monte Carlo tree search
-def MonteCarloGetMove(board, maxIterations):
+def MonteCarloGetMove(board, maxIterations, verbose = True):
     rootNode = Node(board)
     for i in range(maxIterations):
         node = rootNode
@@ -62,11 +62,11 @@ def MonteCarloGetMove(board, maxIterations):
             state.makeMove(move[0], move[1])
                 
         #Backpropagate
-        while node != None: #Backpropagate to the root node
-            if state.wonBy == board.getCurrentPlayer():
-                node.update(1)
-            elif state.wonBy == 3:
+        while node != None:
+            if state.wonBy == 3:
                 node.update(0.0625)
+            elif state.wonBy == node.lastPlayer:
+                node.update(1)
             else:
                 node.update(0)
             node = node.parentNode
@@ -76,5 +76,5 @@ def MonteCarloGetMove(board, maxIterations):
         if rootNode.childNodes[i].visits > bestVisits:
             bestVisits = rootNode.childNodes[i].visits
             bestIndex = i
-    print("From " + str(len(rootNode.childNodes)) + " best node had " + str(bestVisits) + " visits and " + str(rootNode.childNodes[bestIndex].wins) + " wins.")
+    if verbose: print("From " + str(len(rootNode.childNodes)) + " best node had " + str(bestVisits) + " visits and " + str(rootNode.childNodes[bestIndex].wins) + " wins.")
     return rootNode.childNodes[bestIndex].move

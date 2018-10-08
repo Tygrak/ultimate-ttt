@@ -77,7 +77,7 @@ class Board:
             self.wonBy = self.boards[0].wonBy
         if self.boards[2].wonBy == self.boards[4].wonBy and self.boards[2].wonBy == self.boards[6].wonBy and self.boards[2].wonBy != 0:
             self.wonBy = self.boards[2].wonBy
-        if self.wonBy == 0 and  len(self.getMoves()) == 0:
+        if self.wonBy == 0 and len(self.getMoves()) == 0:
             self.wonBy = 3
 
     def boardToArray(self):
