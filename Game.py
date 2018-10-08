@@ -15,6 +15,7 @@ class Game:
         self.sleepAfterAITurn = 0.5
 
     def startGame(self, verbose = True):
+        self.resetValues()
         board = Board()
         if verbose: board.printBoard()
         while board.wonBy == 0:
