@@ -1,9 +1,10 @@
 from Game import Game
 import time
 
-def PlayAgainstAI(AIIterations, playAsPlayer1 = True):
+def PlayAgainstAI(AIIterations, playAsPlayer1 = True, useTimer = False):
     game = Game()
     game.sleepAfterAITurn = 0.0
+    game.useTimer = useTimer
     if playAsPlayer1:
         game.player1IsAI = False
         game.player2IsAI = True
@@ -40,5 +41,6 @@ def RunAI(player1Iterations, start, step, stop, gamesPer):
         setTimeToFinish = time.time() - setTime
         print("Game set " + str(game.player1Iterations) + ":" + str(game.player2Iterations) + " finished running in " + str(setTimeToFinish))
 
-RunAI(150, 525, 25, 550, 50)
-#PlayAgainstAI(10000, False)
+#RunAI(150, 525, 25, 550, 50)
+#PlayAgainstAI(7500, False)
+PlayAgainstAI(10, False, True)

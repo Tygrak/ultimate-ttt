@@ -92,8 +92,9 @@ class Board:
 
     def printBoard(self):
         board = self.boardToArray()
+        print("  a b c d e f g h i")
         for y in range(9):
-            toPrint = ""
+            toPrint = str(y+1) + " "
             for x in range(9):
                 square = board[x+y*9]
                 if square == 1:
@@ -108,4 +109,4 @@ class Board:
                     toPrint += " "
             print(toPrint)
             if y == 2 or y == 5:
-                print("-----------------")
+                print("  -----------------")

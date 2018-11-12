@@ -1,5 +1,6 @@
 import random
 import math
+import datetime
 from Board import Board
 
 class Node:
@@ -38,12 +39,19 @@ class Node:
         self.wins += result
 
 #Monte Carlo tree search
-def MonteCarloGetMove(board, maxIterations, verbose = True):
+#If use timer is true, instead use max thinking time as seconds
+def MonteCarloGetMove(board, maxIterations, verbose = True, useTimer = False):
     rootNode = Node(board)
+    timer = maxIterations
+    startTime = datetime.datetime.now()
+    if useTimer:
+        maxIterations = 1000000
     for i in range(maxIterations):
         node = rootNode
         state = board.clone()
-        
+        if useTimer:
+            if (datetime.datetime.now() - startTime).total_seconds() > timer:
+                break
         #Select
         while node.untriedMoves == [] and node.childNodes != []:
             node = node.selectChild()
