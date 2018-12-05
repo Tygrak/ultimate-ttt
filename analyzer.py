@@ -29,11 +29,10 @@ def analyzeWhere(results, player1Iters, player2Iters):
             player2Wins += 1
         else:
             tiedGames += 1
-    #print(player1Wins, player2Wins, tiedGames, games, totalTurns)
     print("For " + str(player1Iters) + ":" + str(player2Iters) + " " + str(games) + " games were played, player1 won: " + str(player1Wins) + ", player2 won: " + str(player2Wins) + ", tied games: " + str(tiedGames) + " player1 win rate was: " + str(player1Wins/games) + " tie rate was: " + str(tiedGames/games) + " average turns per game " + str(totalTurns/games))
     return player1Wins/games
 
-def plotValues(results, player1Iters, start, step, stop):
+def plotWinRates(results, player1Iters, start, step, stop):
     xValues = []
     yValues = []
     for i in range(start, stop+step, step):
@@ -80,6 +79,7 @@ with open("results.txt", "r") as outputFile:
 print("Loaded " + str(len(results)) + " game results.")
 #analyzeWhere(results, 100, 100)
 plt.style.use('ggplot')
-#plotValues(results, 150, 25, 25, 550)
+#plotWinRates(results, 150, 25, 25, 550)
+#plotWinRates(results, -4, 5, 5, 100)
 plotAverageTurns(results, 150, 25, 25, 550)
 plt.show()
